@@ -32,13 +32,9 @@ async function run() {
     });
     //posting product
     app.post('/products', async (req, res) => {
-      // const doc = {
-      //   name: 'cycle',
-      //   price: 1200
-      // }
-      const result = await productsCollection.insertOne();
-      // console.log(`A document was inserted with the _id: ${result.insertedId}`);
-      res.send(result);
+      const product = req.body;
+      const result = await productsCollection.insertOne(product);
+      res.json(result);
     })
 
     //getting product
