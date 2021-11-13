@@ -73,6 +73,12 @@ async function run() {
       const result = await orderCollection.insertOne(order);
       res.json(result);
     });
+    //getting all orders
+    app.get('/orders', async(req, res)=>{
+      const cursor = orderCollection.find({});
+      const orders = await cursor.toArray();
+      res.send(orders);
+    })
     //getting orders
     app.get('/orders', async(req, res)=>{
       const email = req.query.email;
@@ -80,6 +86,13 @@ async function run() {
       const cursor = orderCollection.find(query);
       const orders = await cursor.toArray();
       res.send(orders);
+    })
+    // deleting orders
+    app.delete('/orders/:id', async(req, res)=>{
+      const id = req.params.id;
+      const query = {_id: ObjectId(id)};
+      const result = await orderCollection.deleteOne(query);
+      res.json(result);
     })
 
     // creating users
